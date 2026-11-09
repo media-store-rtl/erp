@@ -267,17 +267,9 @@ if (!getDolGlobalString('ADD_UNSPLASH_LOGIN_BACKGROUND')) {
 
 
 
-<!-- Title with version -->
-<div class="login_table_title center" tabindex="-1" title="<?php echo dolPrintHTMLForAttribute($title); ?>">
-<?php
-if ($disablenofollow) {
-	echo '<a class="login_table_title" tabindex="-1" href="https://www.dolibarr.org" target="_blank" rel="noopener noreferrer external">';
-}
-echo dolPrintHTML($title);
-if ($disablenofollow) {
-	echo '</a>';
-}
-?>
+<!-- Custom ERP title -->
+<div class="login_table_title center" tabindex="-1" title="erp.mymedimo.ir">
+erp.mymedimo.ir
 </div>
 
 
