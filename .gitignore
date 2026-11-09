@@ -1,0 +1,30 @@
+# Dolibarr configuration and secrets
+/conf/conf.php
+/conf/conf.php.old
+
+# Runtime data and generated files
+/documents/
+/admin/temp/
+/temp/
+/uploads/
+/backup/
+/backups/
+
+# Local archives and database dumps
+/dolibarr-24.0.2.zip
+*.sql.gz
+*.dump
+
+# Local environment and server-specific configuration
+/.env
+/.env.*
+!/.env.example
+/.user.ini
+/php.ini
+
+# Logs and temporary files
+*.log
+*.tmp
+*.swp
+/dev/documents/
+/stripe/config.php
