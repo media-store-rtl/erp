@@ -1,3 +1,4 @@
 deployment:
   tasks:
     - /bin/tar -C /home/mediast1/repositories/erp --exclude='./.git' --exclude='./.cpanel.yml' --exclude='./.htaccess' --exclude='./conf/.htaccess' --exclude='./conf/conf.php' --exclude='./conf/conf.php.old' --exclude='./.user.ini' --exclude='./php.ini' --exclude='./documents' --exclude='./dev/documents' --exclude='./uploads' --exclude='./temp' --exclude='./admin/temp' --exclude='./backup' --exclude='./backups' --exclude='./stripe/config.php' --exclude='./dolibarr-24.0.2.zip' -cf - . | /bin/tar -C /home/mediast1/erp.mymedimo.ir -xf -
+    - /bin/chmod 755 /home/mediast1/erp.mymedimo.ir
