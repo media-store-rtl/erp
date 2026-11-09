@@ -278,9 +278,6 @@ erp.mymedimo.ir
 
 <div id="login_line1">
 
-<div id="login_left">
-<img alt="" src="<?php echo $urllogo; ?>" id="img_logo" />
-</div>
 
 <br>
 
