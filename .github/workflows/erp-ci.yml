@@ -1,0 +1,110 @@
+name: ERP CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main, feature/medimo-login-redesign]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: erp-ci-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  php-syntax:
+    name: PHP syntax
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          coverage: none
+
+      - name: Find changed PHP files
+        id: changed
+        shell: bash
+        env:
+          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          PUSH_BEFORE_SHA: ${{ github.event.before }}
+        run: |
+          if [[ "${GITHUB_EVENT_NAME}" == "pull_request" ]]; then
+            base="$PR_BASE_SHA"
+          elif [[ -n "$PUSH_BEFORE_SHA" && ! "$PUSH_BEFORE_SHA" =~ ^0+$ ]]; then
+            base="$PUSH_BEFORE_SHA"
+          else
+            base="$(git rev-parse HEAD^ 2>/dev/null || git hash-object -t tree /dev/null)"
+          fi
+          git diff --name-only --diff-filter=ACMR "$base" "$GITHUB_SHA" -- '*.php' > /tmp/changed-php.txt
+          if [[ -s /tmp/changed-php.txt ]]; then
+            echo "has_files=true" >> "$GITHUB_OUTPUT"
+            cat /tmp/changed-php.txt
+          else
+            echo "has_files=false" >> "$GITHUB_OUTPUT"
+            echo "No changed PHP files; syntax check is not applicable."
+          fi
+
+      - name: Lint login template
+        run: php -l core/tpl/login.tpl.php
+
+      - name: Lint other changed PHP files
+        if: steps.changed.outputs.has_files == 'true'
+        shell: bash
+        run: |
+          while IFS= read -r file; do
+            [[ "$file" == "core/tpl/login.tpl.php" ]] && continue
+            [[ -f "$file" ]] || continue
+            echo "::group::php -l $file"
+            php -l "$file"
+            echo "::endgroup::"
+          done < /tmp/changed-php.txt
+
+  login-template:
+    name: Login template and CSS checks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install CSS parser
+        run: python -m pip install --disable-pip-version-check tinycss2==1.4.0
+
+      - name: Validate login template and embedded CSS
+        run: python scripts/ci/check_login_template.py
+
+  login-browser-smoke:
+    name: Login browser smoke
+    if: ${{ vars.ERP_PREVIEW_URL != '' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install Playwright
+        run: |
+          python -m pip install --disable-pip-version-check playwright==1.52.0
+          python -m playwright install --with-deps chromium
+
+      - name: Check preview login page at desktop and mobile sizes
+        env:
+          ERP_PREVIEW_URL: ${{ vars.ERP_PREVIEW_URL }}
+        run: python scripts/ci/login_browser_smoke.py
