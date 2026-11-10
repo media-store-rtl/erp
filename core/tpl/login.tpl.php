@@ -223,6 +223,172 @@ if (getDolGlobalString('ADD_UNSPLASH_LOGIN_BACKGROUND')) {
 }
 ?>
 
+<style>
+/* Medimo ERP login refresh: presentation-only overrides; keep Dolibarr auth flow intact. */
+body.bodylogin {
+  min-height: 100vh;
+  margin: 0;
+  background: #eef5fc !important;
+  font-family: 'Vazirmatn', Tahoma, sans-serif !important;
+}
+body.bodylogin .login_center {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 100vh;
+  padding: 42px clamp(22px, 5vw, 88px);
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 18% 18%, rgba(255,255,255,.98) 0, rgba(255,255,255,.78) 28%, transparent 56%),
+    radial-gradient(ellipse at 42% 82%, rgba(91,177,239,.32), transparent 48%),
+    linear-gradient(125deg, #eaf5ff 0%, #c8e3fa 48%, #0c4c88 100%) !important;
+}
+body.bodylogin .login_center::before {
+  content: "M   Medimo\A      ERP Solution\A\Aبه سامانه مدیریت یکپارچه مدیمو خوش آمدید\Aمدیریت هوشمند، کسب‌وکار پویا\A\A✓  مدیریت جامع کسب‌وکار\A✓  امنیت بالا و دسترسی مطمئن\A✓  سرعت و کارایی بیشتر";
+  white-space: pre-line;
+  position: absolute;
+  z-index: 1;
+  left: clamp(24px, 6vw, 100px);
+  top: 50%;
+  transform: translateY(-50%);
+  width: min(48%, 650px);
+  box-sizing: border-box;
+  padding: 48px 34px;
+  color: #123d70;
+  font-size: clamp(17px, 1.55vw, 24px);
+  font-weight: 600;
+  line-height: 2.35;
+  text-align: left;
+  direction: rtl;
+  text-shadow: 0 1px 0 rgba(255,255,255,.45);
+  border-radius: 28px;
+  background: linear-gradient(135deg, rgba(255,255,255,.38), rgba(255,255,255,.08));
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.55);
+}
+body.bodylogin .login_vertical_align {
+  position: relative;
+  z-index: 2;
+  width: min(100%, 470px);
+  box-sizing: border-box;
+  margin: 0 clamp(0px, 1.5vw, 24px) 0 0;
+  padding: clamp(28px, 4vw, 48px);
+  border: 1px solid rgba(255,255,255,.85);
+  border-radius: 26px;
+  background: rgba(255,255,255,.97);
+  box-shadow: 0 22px 65px rgba(8,43,82,.22);
+}
+body.bodylogin .login_table_title {
+  margin: 0 0 24px;
+  padding: 0;
+  color: #123d70;
+  font-size: 25px;
+  font-weight: 800;
+  line-height: 1.6;
+}
+body.bodylogin .login_table_title::before {
+  content: "🔒";
+  display: block;
+  width: 66px;
+  height: 66px;
+  margin: 0 auto 12px;
+  border-radius: 50%;
+  background: #e4f2ff;
+  font-size: 29px;
+  line-height: 66px;
+}
+body.bodylogin .login_table_title::after {
+  content: "لطفاً اطلاعات کاربری خود را وارد کنید";
+  display: block;
+  margin-top: 4px;
+  color: #64748b;
+  font-size: 14px;
+  font-weight: 400;
+}
+body.bodylogin .login_table {
+  width: 100%;
+}
+body.bodylogin .trinputlogin {
+  margin: 0 0 15px;
+}
+body.bodylogin .tdinputlogin {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  min-height: 58px;
+  padding: 0 15px;
+  border: 1px solid #dce6f1;
+  border-radius: 13px;
+  background: #fff;
+}
+body.bodylogin .tdinputlogin:focus-within {
+  border-color: #60a5fa;
+  box-shadow: 0 0 0 3px rgba(37,99,235,.1);
+}
+body.bodylogin .tdinputlogin > .fa {
+  color: #64748b;
+  flex: 0 0 22px;
+}
+body.bodylogin .tdinputlogin input {
+  width: 100%;
+  min-width: 0;
+  height: 48px;
+  border: 0 !important;
+  box-shadow: none !important;
+  background: transparent;
+  color: #172b4d;
+  font: inherit;
+  text-align: right;
+}
+body.bodylogin #login-submit-wrapper {
+  margin-top: 20px;
+}
+body.bodylogin .butActionLogin {
+  width: 100%;
+  min-height: 58px;
+  border: 0 !important;
+  border-radius: 13px;
+  background: linear-gradient(110deg, #087bc5, #073b75) !important;
+  color: #fff !important;
+  font: 700 18px 'Vazirmatn', Tahoma, sans-serif !important;
+  box-shadow: 0 8px 20px rgba(7,75,137,.2);
+  cursor: pointer;
+}
+body.bodylogin .butActionLogin:hover {
+  filter: brightness(1.06);
+  transform: translateY(-1px);
+}
+body.bodylogin .alogin {
+  color: #174b7e;
+}
+body.bodylogin .login_main_message {
+  margin-top: 16px;
+}
+@media (max-width: 900px) {
+  body.bodylogin .login_center {
+    justify-content: center;
+    padding: 24px 16px;
+  }
+  body.bodylogin .login_center::before {
+    display: none;
+  }
+  body.bodylogin .login_vertical_align {
+    margin: 0;
+  }
+}
+@media (max-width: 480px) {
+  body.bodylogin .login_vertical_align {
+    padding: 26px 20px;
+    border-radius: 20px;
+  }
+  body.bodylogin .login_table_title {
+    font-size: 22px;
+  }
+}
+</style>
+
 <?php if (empty($conf->dol_use_jmobile)) { ?>
 <script>
 $(document).ready(function () {
