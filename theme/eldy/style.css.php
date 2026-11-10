@@ -164,6 +164,9 @@ top_httphead('text/css');
 // Important: Following code is to avoid page request by browser and PHP CPU at each Dolibarr page access.
 header('Cache-Control: max-age=10800, public, must-revalidate');
 
+// Load the Persian UI font for the login page and the full Dolibarr interface.
+print "@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700&display=swap');\\n";
+
 if (GETPOST('theme', 'aZ09')) {
 	$conf->theme = GETPOST('theme', 'aZ09'); // If theme was forced on URL
 }
@@ -419,6 +422,9 @@ print '*/'."\n";
 
 // Include the global.inc.php that include the badges, btn, info-box, dropdown, progress...
 require __DIR__.'/global.inc.php';
+
+/* MyMedimo Persian typography: Vazirmatn */
+print "body, input, select, textarea, button, .select2-container, .select2-selection, .flatpickr-calendar { font-family: 'Vazirmatn', Tahoma, sans-serif !important; }\\n";
 
 if (is_object($db)) {
 	$db->close();
