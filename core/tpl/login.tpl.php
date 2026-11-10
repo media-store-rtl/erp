@@ -290,7 +290,9 @@ body.bodylogin .login_table_title {
   line-height: 1.6;
 }
 body.bodylogin .login_table_title::before {
-  content: "\\f0fa";\n  font-family: "FontAwesome";\n  font-weight: normal;
+  content: "\f0fa";
+  font-family: "FontAwesome";
+  font-weight: normal;
   display: block;
   width: 66px;
   height: 66px;
