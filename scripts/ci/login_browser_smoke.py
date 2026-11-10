@@ -17,7 +17,7 @@ parsed = urlparse(url)
 if parsed.scheme != "https" or not parsed.hostname:
     raise SystemExit("ERP_PREVIEW_URL must be an HTTPS URL")
 host = parsed.hostname.lower()
-if host == "erp.mymedimo.ir" or host == "mymedimo.ir" or host.endswith(".mymedimo.ir"):
+if host in {"erp.mymedimo.ir", "mymedimo.ir", "www.mymedimo.ir"}:
     raise SystemExit("Refusing to run browser smoke test against production mymedimo.ir")
 
 with sync_playwright() as playwright:
@@ -40,7 +40,7 @@ with sync_playwright() as playwright:
     if action != "login":
         browser.close()
         raise SystemExit(f"Unexpected actionlogin value: {action!r}")
-    if form.get_attribute("method", "get").lower() != "post":
+    if (form.get_attribute("method") or "get").lower() != "post":
         browser.close()
         raise SystemExit("Login form must submit with POST")
 
