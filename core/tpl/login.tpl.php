@@ -224,6 +224,7 @@ if (getDolGlobalString('ADD_UNSPLASH_LOGIN_BACKGROUND')) {
 ?>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap');
 /* Medimo ERP login refresh: presentation-only overrides; keep Dolibarr auth flow intact. */
 body.bodylogin {
   min-height: 100vh;
@@ -289,7 +290,7 @@ body.bodylogin .login_table_title {
   line-height: 1.6;
 }
 body.bodylogin .login_table_title::before {
-  content: "🔒";
+  content: "\\f0fa";\n  font-family: "FontAwesome";\n  font-weight: normal;
   display: block;
   width: 66px;
   height: 66px;
@@ -459,7 +460,7 @@ erp.mymedimo.ir
 		?><label for="username" class="hidden"><?php echo $langs->trans("Login"); ?></label><?php
 	} ?>
 <!-- <span class="span-icon-user">-->
-<span class="fa fa-user"></span>
+<span class="fa fa-user-circle" aria-hidden="true"></span>
 <input type="text" id="username" maxlength="255" placeholder="<?php echo $langs->trans("Login"); ?>" name="username" class="flat input-icon-user minwidth150 input-nobottom" value="<?php echo dol_escape_htmltag($login); ?>" tabindex="1" autofocus="autofocus" autocapitalize="off" autocomplete="on" spellcheck="false" />
 </div>
 </div>
@@ -471,7 +472,7 @@ erp.mymedimo.ir
 		?><label for="password" class="hidden"><?php echo $langs->trans("Password"); ?></label><?php
 	} ?>
 <!--<span class="span-icon-password">-->
-<span class="fa fa-key"></span>
+<span class="fa fa-lock" aria-hidden="true"></span>
 <input type="password" id="password" maxlength="128" placeholder="<?php echo $langs->trans("Password"); ?>" name="password" class="flat input-icon-password minwidth150 input-nobottom" value="<?php echo dol_escape_htmltag($password); ?>" tabindex="2" autocomplete="<?php echo !getDolGlobalString('MAIN_LOGIN_ENABLE_PASSWORD_AUTOCOMPLETE') ? 'off' : 'on'; ?>" />
 	<?php
 	include_once DOL_DOCUMENT_ROOT.'/core/lib/security2.lib.php';
