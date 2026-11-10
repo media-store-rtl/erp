@@ -2,7 +2,4 @@ User-agent: Claude-User
 Allow: /
 
 User-agent: *
-Allow: /public/demo/
-Allow: /public/members/new.php
-Allow: /index.php
-Disallow: /
+Allow: /
