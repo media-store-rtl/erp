@@ -235,6 +235,7 @@ body.bodylogin {
 body.bodylogin .login_center {
   position: relative;
   display: flex;
+  direction: ltr;
   align-items: center;
   justify-content: flex-end;
   box-sizing: border-box;
@@ -272,9 +273,10 @@ body.bodylogin .login_center::before {
 body.bodylogin .login_vertical_align {
   position: relative;
   z-index: 2;
+  direction: rtl;
   width: min(100%, 470px);
   box-sizing: border-box;
-  margin: 0 clamp(0px, 1.5vw, 24px) 0 0;
+  margin: 0;
   padding: clamp(28px, 4vw, 48px);
   border: 1px solid rgba(255,255,255,.85);
   border-radius: 26px;
